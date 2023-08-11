@@ -1,35 +1,37 @@
-import './scss/app.scss';
-import { Header } from './components/Header';
-import { Categories } from './components/Categories';
-import { Sort } from './components/Sort';
-import { PizzaBlock } from './components/PizzaBlock';
+import "./scss/app.scss";
 
+import React from "react";
 
+import { Header } from "./components/Header";
+import { Home } from "./pages/Home";
+import { NotFound } from "./pages/NotFound";
+import { Routes, Route } from "react-router-dom";
+import { Cart } from "./pages/Cart";
+
+export const SearchContext = React.createContext(" ");
 
 function App() {
+  const [searchValue, setSearchValue] = React.useState("");
   return (
     <div className="App">
-      <div class="wrapper">
-        <Header />
-        <div class="content">
-          <div class="container">
-            <div class="content__top">
-              <Categories />
-              <Sort />
-            </div>
-            <h2 class="content__title">Все пиццы</h2>
-            <div class="content__items">
-              <PizzaBlock title="Mexikanisch" price="300"/>
-              <PizzaBlock />
-              <PizzaBlock />
-              <PizzaBlock />
-              <PizzaBlock />
-              <PizzaBlock />
-              <PizzaBlock />
-              <PizzaBlock />
-            </div>
+      <div className="wrapper">
+        <SearchContext.Provider value={{searchValue,setSearchValue}}>
+          <Header />
+          <div className="content">
+            <Routes>
+              <Route
+                path=""
+                element={
+                  <Home
+                 
+                  />
+                }
+              />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </div>
-        </div>
+        </SearchContext.Provider>
       </div>
     </div>
   );

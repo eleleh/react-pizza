@@ -3,24 +3,23 @@ import debounce from "lodash.debounce";
 import styles from "./Search.module.scss";
 import { FiSearch } from "react-icons/fi";
 import { VscClose } from "react-icons/vsc";
-import { SearchContext } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
-export const Search = () => {
+export const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
   // const { setSearchValue } = React.useContext(SearchContext);
   const [searchIsOpen, setSearchIsOpen] = React.useState(false);
 
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
-      dispatch(setSearchValue(str))
+    debounce((str: string) => {
+      dispatch(setSearchValue(str));
     }, 350),
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -29,7 +28,7 @@ export const Search = () => {
     setSearchIsOpen(!searchIsOpen);
   };
   const closeSearch = () => {
-    dispatch(setSearchValue(''));
+    dispatch(setSearchValue(""));
     setValue("");
     toggleSearch();
   };
@@ -40,13 +39,12 @@ export const Search = () => {
         <div className={styles.openedSearch}>
           <FiSearch className={styles.searchIcon} onClick={toggleSearch} />
           <input
-            className={styles.input}
             placeholder="Suchen nach..."
             onChange={onChangeInput}
             value={value}
           />
 
-          <button onClick={closeSearch} className={styles.closeBtn}>
+          <button onClick={closeSearch} >
             <VscClose />
           </button>
         </div>

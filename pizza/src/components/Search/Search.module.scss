@@ -1,59 +1,64 @@
-.root{
+.closedSearch {
   position: relative;
-  left: -120px;
-  width: 30px;
-}
-
-.closedSearch{
   width: 40px;
   height: 40px;
   border: 1px solid black;
   opacity: 0.3;
-  border-radius:20px;
-  &:hover{
-    cursor:pointer;
+  border-radius: 20px;
+  &:hover {
+    cursor: pointer;
     opacity: 1;
+  }
+  @media (max-width: 1260px) {
+    margin-right: 100px;
+  }
+}
+.openedSearch {
+  width: 300px;
+  display: flex;
+  position: relative;
+  margin-right: 20px;
+  input {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+    width: 380px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding-left: 45px;
+    height: 45px;
+
+    &:focus {
+      border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  button {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    left: 270px;
+    bottom: 10px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+
+  @media (max-width: 1260px) {
+    margin-right: 20px;
+    margin-left: 20px;
   }
 }
 
-.searchIcon{
-  opacity:0.7;
-  left:9px;
+.searchIcon {
+  opacity: 0.7;
+  left: 9px;
   bottom: 9px;
   position: absolute;
   height: 20px;
   width: 20px;
-
-}
-
-.input{
-  border: 1px solid rgba(0,0,0,0.1);
-  padding: 12px 20px;
-  width: 380px;
-  border-radius: 10px;
-  font-size: 16px;
-  padding-left: 45px;
-  height: 45px;
-
-  &:focus{
-    border: 1px solid rgba(0,0,0,0.5);
-   
-  }
-}
-
-
-.closeBtn{
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius:5px;
-  left:350px;
-  bottom: 10px;
-
-  &:hover{
-    cursor: pointer;
-    opacity: 0.8;
-  }
 }

@@ -1,24 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
-import { setItems, fetchPizzas } from "../redux/slices/pizzasSlice";
+import { useSelector } from "react-redux";
+import {
+  selectFilter,
+  selectFilterSort,
+  setCategoryId,
+  setCurrentPage,
+} from "../redux/slices/filterSlice";
+import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
 
 import { Categories } from "../components/Categories";
-import { Sort } from "../components/Sort";
+import { SortPopup } from "../components/SortPopup";
 import { PizzaBlock } from "../components/PizzaBlock";
 import { Skeleton } from "../components/PizzaBlock/Skeleton";
 import { Pagination } from "../components/Pagination";
 import { Search } from "../components/Search";
+import { categories } from "../components/Categories";
 
-export const Home = () => {
-  const dispatch = useDispatch();
-  const { categoryId, currentPage, searchValue } = useSelector(
-    (state) => state.filter
-  );
-  const selectedSort = useSelector((state) => state.filter.sort.sortProperty);
-  const { items, status } = useSelector((state) => state.pizzas);
+export const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { categoryId, currentPage, searchValue, sort } =
+    useSelector(selectFilter);
+  const selectedSort = useSelector(selectFilterSort);
+  const { items, status } = useSelector(selectPizzas);
 
   //const { searchValue } = React.useContext(SearchContext);
 
@@ -57,19 +62,16 @@ export const Home = () => {
     getPizzas();
   }, [categoryId, selectedSort, currentPage, searchValue]);
 
-  const onClickCategory = (id) => {
+  const onClickCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  }, []);
+
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   //  .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-  const pizzas = items.map((obj) => (
-    <Link to={`/pizza/${obj.id}`} key={obj.id}>
-      <PizzaBlock {...obj} />
-    </Link>
-  ));
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeleton = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));
@@ -82,9 +84,9 @@ export const Home = () => {
           onClickCategory={onClickCategory}
         />
         <Search />
-        <Sort />
+        <SortPopup sortValue={sort} />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">{categories[categoryId]} PizZzas</h2>
 
       {status === "error" ? (
         <div className="content__error-info">

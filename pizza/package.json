@@ -1,4 +1,5 @@
 {
+  "homepage": "https://eleleh.github.io/react-pizza",
   "name": "pizza",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +14,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "axios": "^1.4.0",
+    "gh-pages": "^6.0.0",
     "lodash.debounce": "^4.0.8",
     "qs": "^6.11.2",
     "react": "^18.2.0",
@@ -30,6 +32,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predoploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
